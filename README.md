@@ -21,13 +21,24 @@ SNS landing page:
 https://bitmeister-yk.github.io/takken-app-pages/?campaign_code=phase1-question_prompt-001
 ```
 
+App Store Connect campaign link passthrough:
+
+```text
+https://bitmeister-yk.github.io/takken-app-pages/?campaign_code=phase1-question_prompt-001&pt=<provider-token>&mt=8
+```
+
 Supported campaign parameters:
 
 - `campaign_code`
 - `campaign`
 - `ct`
 - `utm_campaign`
+- `pt`
+- `provider_token`
+- `mt`
+- `media_type`
 
-The landing page passes the campaign value to the App Store link as `ct`.
-When the App Store Connect provider token is ready, add the required campaign
-link parameters to the App Store URL generation.
+The landing page maps the local campaign value to the App Store campaign token
+`ct`. When `pt` is supplied, it also passes the provider token to the App Store
+link and defaults `mt` to `8` for app campaigns unless another media type is
+explicitly supplied. No provider token is stored as a default in this repository.
