@@ -42,6 +42,10 @@
           <dt>現在のキャンペーン</dt>
           <dd id="campaign-code">direct</dd>
         </div>
+        <div>
+          <dt>App Store計測</dt>
+          <dd id="app-store-campaign-status">ctのみ</dd>
+        </div>
       </dl>
     </section>
 
@@ -53,17 +57,32 @@
     (function () {
       const appStoreBase = "https://apps.apple.com/jp/app/%E5%AE%85%E5%BB%BA%E5%88%86%E9%87%8E%E3%83%88%E3%83%AC/id6782487709";
       const params = new URLSearchParams(window.location.search);
+      const sanitizeToken = (value, fallback = "") => (value || fallback).replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 64);
+      const sanitizeMediaType = (value) => (value || "").replace(/[^0-9]/g, "").slice(0, 4);
       const rawCampaign = params.get("campaign_code") || params.get("campaign") || params.get("ct") || params.get("utm_campaign") || "direct";
-      const campaign = rawCampaign.replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 64) || "direct";
+      const campaign = sanitizeToken(rawCampaign, "direct") || "direct";
+      const providerToken = sanitizeToken(params.get("pt") || params.get("provider_token"));
+      const rawMediaType = params.get("mt") || params.get("media_type");
+      const mediaType = sanitizeMediaType(rawMediaType) || (providerToken ? "8" : "");
       const appStoreUrl = new URL(appStoreBase);
+      if (providerToken) {
+        appStoreUrl.searchParams.set("pt", providerToken);
+      }
       appStoreUrl.searchParams.set("ct", campaign);
+      if (mediaType) {
+        appStoreUrl.searchParams.set("mt", mediaType);
+      }
       const link = document.getElementById("app-store-link");
       const label = document.getElementById("campaign-code");
+      const status = document.getElementById("app-store-campaign-status");
       if (link) {
         link.href = appStoreUrl.toString();
       }
       if (label) {
         label.textContent = campaign;
+      }
+      if (status) {
+        status.textContent = providerToken ? "pt/ct/mt連携" : "ctのみ";
       }
     })();
   </script>
