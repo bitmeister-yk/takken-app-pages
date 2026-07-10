@@ -18,6 +18,7 @@ body {
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Hiragino Sans", "Yu Gothic", sans-serif;
   line-height: 1.75;
+  overflow-x: hidden;
 }
 
 main {
@@ -33,6 +34,12 @@ section {
   border-radius: 8px;
   padding: 28px;
   margin: 0 0 20px;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.hero {
+  padding-top: 34px;
 }
 
 h1,
@@ -52,6 +59,8 @@ h2 {
 p,
 li {
   color: var(--muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 a {
@@ -61,6 +70,39 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.primary-link,
+.secondary-link {
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 0;
+  padding: 10px 16px;
+}
+
+.primary-link {
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.primary-link:hover {
+  text-decoration: none;
+  background: #096dbb;
+}
+
+.secondary-link {
+  border: 1px solid var(--line);
+  background: #fbfcfe;
 }
 
 .nav {
@@ -75,6 +117,36 @@ a:hover {
   border-radius: 6px;
   padding: 8px 12px;
   background: #fbfcfe;
+  max-width: 100%;
+}
+
+code {
+  background: #eef3f9;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  padding: 2px 5px;
+}
+
+.campaign-box {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin: 16px 0 0;
+  padding: 14px 16px;
+}
+
+.campaign-box dt {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.campaign-box dd {
+  color: var(--text);
+  font-weight: 700;
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
 }
 
 .meta {
@@ -88,3 +160,33 @@ footer {
   padding: 8px 0 0;
 }
 
+@media (max-width: 520px) {
+  main {
+    width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 32px;
+  }
+
+  header,
+  section {
+    padding: 22px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .cta-row,
+  .nav {
+    flex-direction: column;
+  }
+
+  .primary-link,
+  .secondary-link,
+  .nav a {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+}

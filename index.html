@@ -3,15 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>宅建分野トレ サポート</title>
+  <title>宅建分野トレ</title>
+  <meta name="description" content="宅建試験の過去問を分野別に解き、復習を進めるための学習アプリです。">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main>
-    <header>
-      <p class="meta">Takken App Support</p>
+    <header class="hero">
+      <p class="meta">宅建試験対策アプリ</p>
       <h1>宅建分野トレ</h1>
-      <p>宅建試験の過去問を分野別に解き、復習を進めるための学習アプリです。現在提供中および将来提供予定の各プラットフォームに共通するサポートページとして運用します。</p>
+      <p>過去問を分野別に解き、間違えた問題やブックマークから復習できる学習アプリです。Xの「今日の一問」で気になったテーマを、アプリでそのまま復習できます。</p>
+      <div class="cta-row">
+        <a id="app-store-link" class="primary-link" href="https://apps.apple.com/jp/app/%E5%AE%85%E5%BB%BA%E5%88%86%E9%87%8E%E3%83%88%E3%83%AC/id6782487709">App Storeで見る</a>
+        <a class="secondary-link" href="support.html">サポート</a>
+      </div>
       <nav class="nav" aria-label="Pages">
         <a href="privacy.html">プライバシーポリシー</a>
         <a href="support.html">サポート</a>
@@ -29,9 +34,38 @@
       </ul>
     </section>
 
+    <section>
+      <h2>Xから来た方へ</h2>
+      <p>プロフィールや投稿からこのページに来た場合、URLのキャンペーンコードをApp Storeリンクへ引き継ぎます。例: <code>?campaign_code=phase1-question_prompt-001</code></p>
+      <dl class="campaign-box">
+        <div>
+          <dt>現在のキャンペーン</dt>
+          <dd id="campaign-code">direct</dd>
+        </div>
+      </dl>
+    </section>
+
     <footer>
       <p>&copy; bitmeister-yk. This site is for public app support and policy pages.</p>
     </footer>
   </main>
+  <script>
+    (function () {
+      const appStoreBase = "https://apps.apple.com/jp/app/%E5%AE%85%E5%BB%BA%E5%88%86%E9%87%8E%E3%83%88%E3%83%AC/id6782487709";
+      const params = new URLSearchParams(window.location.search);
+      const rawCampaign = params.get("campaign_code") || params.get("campaign") || params.get("ct") || params.get("utm_campaign") || "direct";
+      const campaign = rawCampaign.replace(/[^A-Za-z0-9_.-]/g, "").slice(0, 64) || "direct";
+      const appStoreUrl = new URL(appStoreBase);
+      appStoreUrl.searchParams.set("ct", campaign);
+      const link = document.getElementById("app-store-link");
+      const label = document.getElementById("campaign-code");
+      if (link) {
+        link.href = appStoreUrl.toString();
+      }
+      if (label) {
+        label.textContent = campaign;
+      }
+    })();
+  </script>
 </body>
 </html>
